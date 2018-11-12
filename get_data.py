@@ -95,10 +95,10 @@ from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
 session = Session()
 
-x = StyleBuilder()
-session.add_all(x.run())
-session.commit()
-
-y = BeerBuilder()
-session.add_all(y.run())
-session.commit()
+# x = StyleBuilder()
+# session.add_all(x.run())
+# session.commit()
+#
+# y = BeerBuilder()
+# session.add_all(y.run())
+# session.commit()
