@@ -49,7 +49,7 @@ class BeerBuilder:
                         if "foodPairings" in keys:
                             each_beer.foodPairings = beer['foodPairings']
                         if "style" in keys:
-                            each_beer.foodPairings = beer['style']['name']
+                            each_beer.style = beer['style']['name']
                         each_beer.style_shortName = session.query(Style).filter(Style.shortName == beer['style']['shortName'])
                 except:
                     pass
