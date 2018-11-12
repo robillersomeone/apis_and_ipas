@@ -27,7 +27,6 @@ class BeerBuilder:
                 try:
                     beer['style']['shortName']
                     try:
-                        #everything
                         each_beer = Beer(name = beer['name'],
                         nameDisplay = beer['nameDisplay'], description = beer['description'],
                         abv = beer['abv'], ibu = beer['ibu'], isOrganic = beer['isOrganic'],
@@ -35,9 +34,22 @@ class BeerBuilder:
                         each_beer.style_shortName = session.query(Style).filter(Style.shortName == beer['style']['shortName'])
 
                     except:
-                        each_beer = Beer(name = beer['name'],
-                        nameDisplay = beer['nameDisplay'], isOrganic = beer['isOrganic'],
-                        style = beer['style']['name'])
+                        keys = beer.keys()
+                        each_beer = Beer(name = beer['name'])
+                        if "description" in keys:
+                            each_beer.description = beer['description']
+                        if "nameDisplay" in keys:
+                            each_beer.name = beer['nameDisplay']
+                        if "abv" in keys:
+                            each_beer.abv = beer['abv']
+                        if "ibu" in keys:
+                            each_beer.abv = beer['ibu']
+                        if "isOrganic" in keys:
+                            each_beer.isOrganic = beer['isOrganic']
+                        if "foodPairings" in keys:
+                            each_beer.foodPairings = beer['foodPairings']
+                        if "style" in keys:
+                            each_beer.foodPairings = beer['style']['name']
                         each_beer.style_shortName = session.query(Style).filter(Style.shortName == beer['style']['shortName'])
                 except:
                     pass
