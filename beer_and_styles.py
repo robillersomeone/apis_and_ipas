@@ -8,7 +8,6 @@ class Style(Base):
     id = Column(Integer, primary_key = True)
     name = Column(Text, nullable = True)
     shortName = Column(Text, nullable = True)
-    beers = relationship('Beer', back_populates = 'style_shortName')
     nameDisplay = Column(Text, nullable = True)
     category = Column(Text, nullable = True)
     description = Column(Text, nullable = True)
@@ -16,6 +15,7 @@ class Style(Base):
     abvMax = Column(Float, nullable = True)
     ibuMin = Column(Float, nullable = True)
     ibuMax = Column(Float, nullable = True)
+    beers = relationship('Beer', back_populates = 'style_shortName')
 
 class Beer(Base):
     __tablename__ = 'beers'

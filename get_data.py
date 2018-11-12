@@ -31,8 +31,7 @@ class BeerBuilder:
                         nameDisplay = beer['nameDisplay'], description = beer['description'],
                         abv = beer['abv'], ibu = beer['ibu'], isOrganic = beer['isOrganic'],
                         foodPairings = beer['foodPairings'], style = beer['style']['name'])
-                        each_beer.style_shortName = session.query(Style).filter(Style.shortName == beer['style']['shortName'])
-
+                        each_beer.style_shortName = session.query(Style).filter(Style.shortName == beer['style']['shortName']).first()
                     except:
                         keys = beer.keys()
                         each_beer = Beer(name = beer['name'])
@@ -50,7 +49,7 @@ class BeerBuilder:
                             each_beer.foodPairings = beer['foodPairings']
                         if "style" in keys:
                             each_beer.style = beer['style']['name']
-                        each_beer.style_shortName = session.query(Style).filter(Style.shortName == beer['style']['shortName'])
+                        each_beer.style_shortName = session.query(Style).filter(Style.shortName == beer['style']['shortName']).first()
                 except:
                     pass
             except:
@@ -66,9 +65,25 @@ class StyleBuilder:
         beer_styles = []
         for style in style_data:
             try:
-                each_style = Style(name = style['name'], category = style['category']['name'], description = style['description'], ibuMin = style['ibuMin'], ibuMax = style['ibuMax'], abvMin = style['abvMin'], abvMax = style['abvMax'])
+                each_style = Style(name = style['name'], shortName = style['shortName'], category = style['category']['name'], description = style['description'],
+                ibuMin = style['ibuMin'], ibuMax = style['ibuMax'], abvMin = style['abvMin'], abvMax = style['abvMax'])
             except:
-                each_style = Style(name = style['name'], category = style['category']['name'])
+                keys = style.keys()
+                each_style = Style(name = style['name'])
+                if "shortName" in keys:
+                    each_style.shortName = style['shortName']
+                if "description" in keys:
+                    each_style.description = style['description']
+                if "category" in keys:
+                    each_style.category = style['category']['name']
+                if "ibuMin" in keys:
+                    each_style.ibuMin = style['ibuMin']
+                if "ibuMax" in keys:
+                    each_style.ibuMax = style['ibuMax']
+                if "abvMin" in keys:
+                    each_style.abvMin = style['abvMin']
+                if "abvMax" in keys:
+                    each_style.abvMax = style['abvMax']
             beer_styles.append(each_style)
         return beer_styles
 
