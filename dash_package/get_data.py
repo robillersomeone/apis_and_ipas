@@ -1,5 +1,5 @@
 import requests
-from beer_and_styles import Beer, Style, Base
+from dash_package.models import Beer, Style
 from sqlalchemy.orm import sessionmaker
 import sqlalchemy
 
@@ -88,17 +88,12 @@ class StyleBuilder:
         return beer_styles
 
 
-engine = sqlalchemy.create_engine('sqlite:///beers.db', echo=True)
-Base.metadata.create_all(engine)
 
-from sqlalchemy.orm import sessionmaker
-Session = sessionmaker(bind=engine)
-session = Session()
-
-x = StyleBuilder()
-session.add_all(x.run())
-session.commit()
-
-y = BeerBuilder()
-session.add_all(y.run())
-session.commit()
+#
+# x = StyleBuilder()
+# session.add_all(x.run())
+# session.commit()
+#
+# y = BeerBuilder()
+# session.add_all(y.run())
+# session.commit()

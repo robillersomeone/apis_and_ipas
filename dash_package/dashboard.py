@@ -1,16 +1,13 @@
 import dash
+from dash_package import app
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from get_histogram import *
+from dash_package.plots import *
 import plotly.plotly as py
 import plotly.graph_objs as go
 import sqlalchemy
 
-engine = sqlalchemy.create_engine('sqlite:///beers.db', echo=True)
-
-
-app = dash.Dash(__name__)
 
 app.layout = html.Div([
     html.H1("Do you know your beer style?"),
@@ -31,7 +28,6 @@ app.layout = html.Div([
         )
 
 ])
-import pdb
 @app.callback(
     dash.dependencies.Output('beer-histogram', 'figure'),
     [dash.dependencies.Input('dropdown', 'value')])

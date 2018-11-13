@@ -1,12 +1,15 @@
-from console import *
+from dash_package import app, db
+from dash_package.models import *
 import nltk
 import re
 from nltk.corpus import stopwords
 stopwords = stopwords.words('english') #set stopwords as a global variable
+import pdb
+from flask_sqlalchemy import SQLAlchemy
 
 #a list of lists populated with each descriptions as a list of words as string
 def get_descriptions(shortname):
-    list_of_descriptions = session.query(Beer.description).join(Style).filter(Style.shortName == shortname).filter(Beer.description != None).all()
+    list_of_descriptions = db.session.query(Beer.description).join(Style).filter(Style.shortName == shortname).filter(Beer.description != None).all()
     return [description[0].split() for description in list_of_descriptions]
 
 
@@ -48,12 +51,11 @@ def plot_words(shortname):
 
 
 
-
 def beers_in_style(shortname):
-    return len(session.query(Beer.name).join(Style).filter(Style.shortName == shortname).all())
+    return len(db.session.query(Beer.name).join(Style).filter(Style.shortName == shortname).all())
 
 def dropdown():
-    all_shortnames = session.query(Style.shortName).all()
+    all_shortnames = db.session.query(Style.shortName).all()
     options = []
     for name in all_shortnames:
         options.append({'label': name[0], 'value': name[0]})
