@@ -10,7 +10,7 @@ import sqlalchemy
 
 
 app.layout = html.Div([
-    html.H1("Do you know your beer style?"),
+    html.H1("But do you rly know your beer style?"),
 
     dcc.Dropdown(
         id = 'dropdown',
@@ -18,12 +18,16 @@ app.layout = html.Div([
         value = 'Brown Porter',
         clearable = False
         ),
+
+    html.P(style_description("Brown Porter"), id = 'style-description'),
+
+    html.H3(min_max_abv("Brown Porter"), id = 'abv_range'),
+
+    # html.H4(avg_abv("Brown Porter")),
+
     dcc.Graph(id = 'beer-histogram',
               figure = {
-              'data': [plot_words('American IPA')],
-              'layout' : {
-                'title': 'testing'
-                      }
+              'data': [plot_words('Brown Porter')]
                         }
         )
 
@@ -34,8 +38,21 @@ app.layout = html.Div([
 def update_figure(selected_style):
     return {
             'data': [plot_words(selected_style)],
-            'layout' : {'title': 'Top Descriptor Words'}
+            'layout' : {'title': f'Out of all the beers labeled "{selected_style}", here are the top words in their descriptions:'}
         }
+
+@app.callback(
+dash.dependencies.Output('style-description', 'children'),
+[dash.dependencies.Input('dropdown', 'value')])
+def update_description(selected_style):
+    return style_description(selected_style)
+
+@app.callback(
+dash.dependencies.Output('abv_range', 'children'),
+[dash.dependencies.Input('dropdown', 'value')])
+def update_abvs(selected_style):
+    return min_max_abv(selected_style)
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

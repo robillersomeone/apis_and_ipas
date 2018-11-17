@@ -4,7 +4,6 @@
 # from sqlalchemy.orm import relationship
 from dash_package import db
 
-
 class Style(db.Model):
     __tablename__ = 'styles'
     id = db.Column(db.Integer, primary_key = True)
@@ -22,6 +21,7 @@ class Style(db.Model):
 class Beer(db.Model):
     __tablename__ = 'beers'
     id = db.Column(db.Integer, primary_key = True)
+    beercode = db.Column(db.Text, nullable = True)
     name = db.Column(db.Text, nullable = True)
     nameDisplay = db.Column(db.Text, nullable = True)
     description = db.Column(db.Text, nullable = True)
@@ -32,3 +32,20 @@ class Beer(db.Model):
     style = db.Column(db.Text)
     style_id = db.Column(db.Integer, db.ForeignKey('styles.id'))
     style_shortName = db.relationship('Style', back_populates = 'beers')
+    ingredients = db.relationship('Ingredient', secondary = "beer_ingredients", back_populates = 'beers')
+
+class Ingredient(db.Model):
+    __tablename__ = 'ingredients'
+    id = db.Column(db.Integer, primary_key = True)
+    ingredientcode = db.Column(db.Integer, nullable = True)
+    name = db.Column(db.Text, nullable = True)
+    category = db.Column(db.Text, nullable = True)
+    categoryDisplay = db.Column(db.Text, nullable = True)
+    beers = db.relationship('Beer', secondary = "beer_ingredients", back_populates = 'ingredients')
+
+
+
+class BeerIngredients(db.Model):
+    __tablename__ = "beer_ingredients"
+    beer_id = db.Column(db.Integer, db.ForeignKey('beers.id'), primary_key = True)
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'), primary_key = True)
