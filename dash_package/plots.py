@@ -3,8 +3,9 @@ from dash_package.models import *
 import nltk
 import re
 from nltk.corpus import stopwords
+from statistics import mean
 stopwords = stopwords.words('english') #set stopwords as a global variable
-import pdb
+
 from flask_sqlalchemy import SQLAlchemy
 
 #a list of lists populated with each descriptions as a list of words as string
@@ -60,3 +61,18 @@ def dropdown():
     for name in all_shortnames:
         options.append({'label': name[0], 'value': name[0]})
     return options
+
+def style_description(shortname):
+    description = db.session.query(Style.description).filter(Style.shortName == shortname).first()[0]
+    return str(description)
+
+def min_max_abv(shortname):
+    abv_min_max = db.session.query(Style.abvMin, Style.abvMax).filter(Style.shortName == shortname).all()
+    abv_min = abv_min_max[0][0]
+    abv_max = abv_min_max[0][1]
+    return f"For {shortname} beers, the ABV ranges from {abv_min} to {abv_max}"
+
+def avg_abv(shortname):
+    all_abvs = db.session.query(Beer.abv).join(Style).filter(Style.shortName == shortname).all()
+    return all_abvs
+    #return mean([float(abv) for abv in all_abvs])
