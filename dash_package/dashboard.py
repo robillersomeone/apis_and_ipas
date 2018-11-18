@@ -15,24 +15,24 @@ app.layout = html.Div([
     dcc.Dropdown(
         id = 'dropdown',
         options = dropdown(),
-        value = 'Brown Porter',
+        value = 'Saison',
         clearable = False
         ),
-    html.P(style_description("Brown Porter"), id = 'style-description'),
+    html.P(style_description("Saison"), id = 'style-description'),
     dcc.Tabs(id="tabs", children=[
         dcc.Tab(label='Top Descripors', children=[
             html.Div([
                 dcc.Graph(
                     id='beer-histogram',
                     figure={
-                        'data': [plot_words('Brown Porter')]
+                        'data': [plot_words('Saison')]
                     }
                 )
             ])
         ]),
         dcc.Tab(label='Food Pairings', children=[
-                html.H3(style_name("Brown Porter")),
-                html.H5(style_foodpairings('Brown Porter'))
+                html.H3(style_name("Saison"), id = "style"),
+                html.H5(style_foodpairings('Saison'), id = "foodpairings")
         ]),
         dcc.Tab(label='ABV vs. IBU', children=[
                 dcc.Graph(
@@ -59,12 +59,25 @@ def update_figure(selected_style):
             'data': [plot_words(selected_style)],
             'layout' : {'title': f'Out of all the beers labeled "{selected_style}", here are the top words in their descriptions:'}
         }
-#
-# @app.callback(
-# dash.dependencies.Output('style-description', 'children'),
-# [dash.dependencies.Input('dropdown', 'value')])
-# def update_description(selected_style):
-#     return style_description(selected_style)
+
+@app.callback(
+dash.dependencies.Output('style-description', 'children'),
+[dash.dependencies.Input('dropdown', 'value')])
+def update_description(selected_style):
+    return style_description(selected_style)
+
+@app.callback(
+dash.dependencies.Output('style', 'children'),
+[dash.dependencies.Input('dropdown', 'value')])
+def update_description(selected_style):
+    return style_name(selected_style)
+
+@app.callback(
+dash.dependencies.Output('foodpairings', 'children'),
+[dash.dependencies.Input('dropdown', 'value')])
+def update_description(selected_style):
+    return style_foodpairings(selected_style)    
+
 #
 # @app.callback(
 # dash.dependencies.Output('abv_range', 'children'),
