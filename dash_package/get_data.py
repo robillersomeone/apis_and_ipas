@@ -1,5 +1,5 @@
 import requests
-from dash_package.models import Beer, Style
+from dash_package.models import Beer, Style, Ingredient, BeerIngredients
 from sqlalchemy.orm import sessionmaker
 import sqlalchemy
 
