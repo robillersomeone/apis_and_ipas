@@ -9,7 +9,9 @@ server.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(server)
 
-app = dash.Dash(__name__, server=server, url_base_pathname='/dashboard/')
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+app = dash.Dash(__name__, server=server, url_base_pathname='/dashboard/', external_stylesheets=external_stylesheets)
 
 from dash_package.get_data import GetBeerData, BeerBuilder, StyleBuilder, IngredientBuilder
 

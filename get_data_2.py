@@ -63,6 +63,7 @@ class BeerBuilder:
 class GetIngredientData():
     #list of dictionaries. Each dictionary is an ingredient with id, name, category, categoryDisplay.
     def get_ingredient_data(self):
+        #change range to 4-10 and test db.session.query(Ingredient.name).all() to see how far it goes
         pages = range(1,4)
         all_ingredients = []
         for page in pages:
@@ -139,11 +140,17 @@ def ids_and_ingredients():
 
 
 def beer_ingredient_ids():
+    updated_beers = []
     for beer in ids_and_ingredients():
         matched_beer = session.query(Beer).filter(Beer.beercode == beer['beercode'])[0]
         for ingredient in beer['data']:
             matched_ingredient = session.query(Ingredient).filter(Ingredient.ingredientcode == ingredient['id'])[0]
             matched_beer.ingredients.append(matched_ingredient)
+        updated_beers.append(matched_beer)
+    return updated_beers
+
+session.add_all(beer_ingredient_ids())
+session.commit()
 
 
 engine = sqlalchemy.create_engine('sqlite:///beers3.db', echo=True)
@@ -157,9 +164,9 @@ session = Session()
 # session.add_all(x.run())
 # session.commit()
 
-y = BeerBuilder()
-session.add_all(y.run())
-session.commit()
+# y = BeerBuilder()
+# session.add_all(y.run())
+# session.commit()
 
 # z = IngredientBuilder()
 # session.add_all(z.run())

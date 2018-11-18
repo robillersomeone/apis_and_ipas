@@ -76,3 +76,17 @@ def avg_abv(shortname):
     all_abvs = db.session.query(Beer.abv).join(Style).filter(Style.shortName == shortname).all()
     return all_abvs
     #return mean([float(abv) for abv in all_abvs])
+
+def style_foodpairings(shortname):
+    list_of_descriptions = db.session.query(Beer.name, Beer.foodPairings).join(Style).filter(Style.shortName == shortname).filter(Beer.foodPairings != None).all()
+    pairing_list = []
+    for beer in list_of_descriptions:
+        pairing = f"{beer[0]} goes with {beer[1]}"
+        #pairing = {"beer name" : beer[0], "food pairing": beer[1].replace("\r\n", " ")}
+        pairing_list.append(pairing)
+    return ('\n'.join(map(str, pairing_list))) 
+
+def style_name(shortname):
+    name = db.session.query(Style.shortName).filter(Style.shortName == shortname).first()[0]
+    foodpairings = style_foodpairings(shortname)
+    return f"Hungry for dinner? Here are some {name}-style beers and their suggested food pairings for you to try!"
