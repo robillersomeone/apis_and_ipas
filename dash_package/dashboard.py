@@ -9,16 +9,16 @@ import plotly.graph_objs as go
 import sqlalchemy
 
 
-y0 = abv_box('Saison')
+y0 = abv_box('Sweet Stout')
 style = go.Box(
     y = y0,
-    name = 'Saison',
+    name = 'Sweet Stout',
      marker=dict(
         color='#3D9970'
 ))
 data = [style]
 layout = go.Layout(
-    title= min_max_abv('Saison'),
+    title= min_max_abv('Sweet Stout'),
     yaxis = dict(
         title='Alcohol Content by Volume',
     zeroline = False),
@@ -31,26 +31,26 @@ app.layout = html.Div([
     dcc.Dropdown(
         id = 'dropdown',
         options = dropdown(),
-        value = 'Saison',
+        value = 'Sweet Stout',
         clearable = False
         ),
-    html.P(style_description("Saison"), id = 'style-description'),
+    html.P(style_description("Sweet Stout"), id = 'style-description'),
     dcc.Tabs(id="tabs", children=[
         dcc.Tab(label='Descriptive Words', children=[
             html.Div([
-                html.H5(count_beers_in_style("Saison"), id = "beers_analyzed"),
+                html.H5(count_beers_in_style("Sweet Stout"), id = "beers_analyzed"),
                 dcc.Graph(
                     id='beer-histogram',
                     figure={
-                        'data': [plot_words('Saison')],
+                        'data': [plot_words('Sweet Stout')],
                         'marker':{'color':'rgb(101, 32, 31)'}
                     }
                 )
             ])
         ]),
         dcc.Tab(label='Food Pairings', children=[
-                html.H4(style_name("Saison"), id = "style"),
-                html.H6(style_foodpairings('Saison'), id = "foodpairings")
+                html.H4(style_name("Sweet Stout"), id = "style"),
+                html.H6(style_foodpairings('Sweet Stout'), id = "foodpairings")
         ]),
         dcc.Tab(label='ABV by style', children=[
                         html.Div([ dcc.Graph(
@@ -101,7 +101,7 @@ def update_description(selected_style):
 dash.dependencies.Output('abv-box', 'figure'),
 [dash.dependencies.Input('dropdown', 'value')])
 def update_abvs(selected_style):
-    y0 = abv_box(selected_style)#abv_box('Saison')
+    y0 = abv_box(selected_style)#abv_box('Sweet Stout')
     style = go.Box(
         y = y0,
         name = selected_style,
