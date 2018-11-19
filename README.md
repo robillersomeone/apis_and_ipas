@@ -31,8 +31,7 @@ At the top of our dashboard is the Style Selector and Description of that style.
 
 
 Once a style is selected you can see the number of beers analyzed with the given style, and the most common descriptors of beers in that style.
-
-
+<img src="https://user-images.githubusercontent.com/39356742/48685594-12007e00-eb85-11e8-86f9-bf921cce1e05.png" width="90%"></img> 
 
 The second tab displays a few specific beers in the selected style, as well as a food pairings to go along with that style.
 
