@@ -41,7 +41,7 @@ The second tab displays a few specific beers in the selected style, as well as a
 
 The third tab displays the spread of the alcohol content (ABV) in that particular style, as well as the average, min, and max alcohol content for that style.
 
-
+<img src="https://user-images.githubusercontent.com/39356742/48685743-d914d900-eb85-11e8-8346-b833c1f0deb9.png" width="90%"></img> 
 
 
 ## Limitations:
