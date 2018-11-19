@@ -11,9 +11,19 @@ import sqlalchemy
 
 y0 = abv_box('Saison')
 style = go.Box(
-    y = y0
-)
+    y = y0,
+    name = 'Saison',
+     marker=dict(
+        color='#3D9970'
+))
 data = [style]
+layout = go.Layout(
+    title= min_max_abv('Saison'),
+    yaxis = dict(
+        title='Alcohol Content by Volume',
+    zeroline = False),
+    boxmode = 'group'
+)
 
 app.layout = html.Div([
 
@@ -42,23 +52,13 @@ app.layout = html.Div([
                 html.H4(style_name("Saison"), id = "style"),
                 html.H6(style_foodpairings('Saison'), id = "foodpairings")
         ]),
-        dcc.Tab(label='ABV vs. IBU', children=[
-                dcc.Graph(
-                    id='abv-ibu',
-                    figure={
-                        'data': [abv_ibu('Saison')],
-                        'layout':{'title':[min_max_abv('Saison')], # min_max_abv('Saison'), avg_abv('Saison')
-                            'xaxis':{
-                                'title':'Alcohol Content by Volume'
-                                },
-                            'yaxis':{
-                                'title':'International Bitterness Units'
-                                }
+        dcc.Tab(label='ABV by style', children=[
+                        html.Div([ dcc.Graph(
+                            id='abv-box',
+                            figure={'data':data,
+                                    'layout':layout
                             }
-                        }
-                    )]
-
-                ),
+                    )])])
         ]),
 
 ])
@@ -98,23 +98,26 @@ def update_description(selected_style):
     return style_foodpairings(selected_style)
 
 @app.callback(
-    dash.dependencies.Output('abv-ibu', 'figure'),
-    [dash.dependencies.Input('dropdown', 'value')])
-def update_figure_abv(selected_style):
-    abvs = min_max_abv(selected_style)
-    return {
-            'data':[abv_ibu(selected_style)], # [abv_ibu(selected_style)],avg_abv(selected_style)
-            'layout' : {'title': abvs,
-                        'xaxis':{
-                            'title':'Alcohol Content by Volume'
-                            },
-                        'yaxis':{
-                            'title':'International Bitterness Units'
-                            }
-                        }
-        }
-
-
+dash.dependencies.Output('abv-box', 'figure'),
+[dash.dependencies.Input('dropdown', 'value')])
+def update_abvs(selected_style):
+    y0 = abv_box(selected_style)#abv_box('Saison')
+    style = go.Box(
+        y = y0,
+        name = selected_style,
+         marker=dict(
+        color='#3D9970'
+    ))
+    layout = go.Layout(
+        title= min_max_abv(selected_style),
+        yaxis = dict(
+            title='Alcohol Content by Volume',
+        zeroline = False),
+        boxmode = 'group'
+    )
+    data = [style]
+    return {'data': data,
+            'layout':layout}
 
 # @app.callback(
 # dash.dependencies.Output('abv_range', 'children'),

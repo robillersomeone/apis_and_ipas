@@ -109,13 +109,14 @@ def count_beers_in_style(shortname):
 
 def avg_abv(shortname):
     all_abvs = db.session.query(Beer.abv).join(Style).filter(Style.shortName == shortname).all()
+    name = db.session.query(Style.shortName).filter(Style.shortName == shortname).first()[0]
     avg = []
     for i in all_abvs:
         if i[0] != None:
             if i[0] < 18:
                 avg.append(i[0])
     avg_final = round(float(mean(avg)), 2)
-    return f"The average ABV is {avg_final}%"
+    return f"Based on our data, the avg ABV is {avg_final}%"
     #return mean([float(abv) for abv in all_abvs])
 
 def min_max_abv(shortname):
@@ -123,7 +124,7 @@ def min_max_abv(shortname):
     abv_min = abv_min_max[0][0]
     abv_max = abv_min_max[0][1]
     avg = avg_abv(shortname)
-    return f"For {shortname} beers, the ABV ranges from {abv_min} to {abv_max}. {avg}"
+    return f"The ABV ranges from {abv_min} to {abv_max} for {shortname} beers. {avg}"
 
 def abv_ibu(shortname):
     #pdb.set_trace()
