@@ -6,7 +6,8 @@ import sqlalchemy
 
 class GetBeerData:
     def get_beer_data(self):
-        pages = range(100,125)
+        #did 100-125
+        pages = range(26,50)
         full_pages = []
         for i in pages:
             r = requests.get(f'http://api.brewerydb.com/v2/beers?key=34225f421585f1bbfa123e72317bd44a&p={i}')
@@ -64,7 +65,7 @@ class GetIngredientData():
     #list of dictionaries. Each dictionary is an ingredient with id, name, category, categoryDisplay.
     def get_ingredient_data(self):
         #change range to 4-10 and test db.session.query(Ingredient.name).all() to see how far it goes
-        pages = range(1,4)
+        pages = range(11,15)
         all_ingredients = []
         for page in pages:
             page_ingredients = requests.get(f'http://api.brewerydb.com/v2/ingredients?key=34225f421585f1bbfa123e72317bd44a&p={page}')
@@ -149,25 +150,27 @@ def beer_ingredient_ids():
         updated_beers.append(matched_beer)
     return updated_beers
 
-session.add_all(beer_ingredient_ids())
-session.commit()
 
 
-engine = sqlalchemy.create_engine('sqlite:///beers3.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:///beers5.db', echo=True)
 Base.metadata.create_all(engine)
 
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# x = StyleBuilder()
-# session.add_all(x.run())
-# session.commit()
+session.add_all(updated_beers)
+session.commit()
 
-# y = BeerBuilder()
-# session.add_all(y.run())
-# session.commit()
 
-# z = IngredientBuilder()
-# session.add_all(z.run())
-# session.commit()
+x = StyleBuilder()
+session.add_all(x.run())
+session.commit()
+
+y = BeerBuilder()
+session.add_all(y.run())
+session.commit()
+
+z = IngredientBuilder()
+session.add_all(z.run())
+session.commit()

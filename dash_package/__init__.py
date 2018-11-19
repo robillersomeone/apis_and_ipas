@@ -9,7 +9,7 @@ server.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(server)
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ['https://codepen.io/softserveslayer/pen/WYZQgV.css']
 
 app = dash.Dash(__name__, server=server, url_base_pathname='/dashboard/', external_stylesheets=external_stylesheets)
 
