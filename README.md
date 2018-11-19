@@ -29,9 +29,11 @@ We used SQLalchemy to create and query a SQLite database, consisting of three pr
 Our dashboard is built upon Dash for front-end interactive visualizations and Flask and the backend framework. We used several callback methods to allow for interactivity between styles. We also made a custom stylesheet for a more aesthetically-pleasing appeal.
 At the top of our dashboard is the Style Selector and Description of that style. Under it, our dashboard consisted of three main tabs that provided more information about the selected style. This was done with the Style callback that would find the associated routes and update the visual on each tab accordingly.
 
+<img src="https://user-images.githubusercontent.com/39356742/48685594-12007e00-eb85-11e8-86f9-bf921cce1e05.png" width="90%"></img> 
 
 Once a style is selected you can see the number of beers analyzed with the given style, and the most common descriptors of beers in that style.
-<img src="https://user-images.githubusercontent.com/39356742/48685594-12007e00-eb85-11e8-86f9-bf921cce1e05.png" width="90%"></img> 
+
+<img src="https://user-images.githubusercontent.com/39356742/48685670-71f72480-eb85-11e8-9360-8f2ba350c58d.png" width="90%"></img> 
 
 The second tab displays a few specific beers in the selected style, as well as a food pairings to go along with that style.
 
