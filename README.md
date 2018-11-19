@@ -37,7 +37,7 @@ Once a style is selected you can see the number of beers analyzed with the given
 
 The second tab displays a few specific beers in the selected style, as well as a food pairings to go along with that style.
 
-
+<img src="https://user-images.githubusercontent.com/39356742/48685718-b8e51a00-eb85-11e8-86ce-3af244c34a54.png" width="90%"></img> 
 
 The third tab displays the spread of the alcohol content (ABV) in that particular style, as well as the average, min, and max alcohol content for that style.
 
